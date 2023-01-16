@@ -51,7 +51,7 @@ jobs:
           workflow: 'build.yaml'
           repo: 'mehmetsalgar/fsm-akka-helm-umbrella-chart'
           ref: 'development'
-          token: ${{ secrets.personal-token }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 30s
@@ -61,7 +61,7 @@ jobs:
           workflow: 'prepare-environment.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
           ref: 'bitnami'
-          token: ${{ secrets.personal-token }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 30s
