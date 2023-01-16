@@ -9,6 +9,9 @@ on:
       branch-name:
         required: true
         type: string
+    secrets:
+      PERSONAL_TOKEN:
+        required: true
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
