@@ -22,7 +22,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 10m
-          wait-for-completion-interval: 30s
+          wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}"}'
   cleanup-dev-environment:
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
-          wait-for-completion-interval: 30s
+          wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}"}'
   remove-k8s-environment:
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
-          wait-for-completion-interval: 30s
+          wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}"}'
       - name: Clean Environment in K8s
         uses: aurelien-baudet/workflow-dispatch@v2
@@ -63,5 +63,5 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
-          wait-for-completion-interval: 30s
+          wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}"}'
