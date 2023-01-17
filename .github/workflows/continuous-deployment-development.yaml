@@ -45,7 +45,7 @@ jobs:
       - name: Deploy Helm Umbrella Chart
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'build.yaml'
+          workflow: 'helm-publish-with-reuse.yaml'
           repo: 'mehmetsalgar/fsm-akka-helm-umbrella-chart'
           ref: 'development'
           token: ${{ secrets.PERSONAL_TOKEN }}
