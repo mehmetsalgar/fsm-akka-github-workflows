@@ -42,5 +42,5 @@ jobs:
       - name: Run Helm Command
         run: |
           cd helm
-          ${{ inputs.helm-command }}
-          echo 'helm upgrade --install fsm-akka . -n ${{ steps.findandreplace.outputs.value }} --create-namespace'
+          helm version          
+          echo '${{ inputs.helm-command }}'
