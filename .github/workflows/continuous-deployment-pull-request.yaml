@@ -86,7 +86,7 @@ jobs:
       - name: Create Future Environment in K8s
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'build-environment.yaml'
+          workflow: 'build-service-environment-with-resuse.yaml'
           repo: 'mehmetsalgar/fsm-akka-4eyes-argocd'
           ref: 'master'
           token: ${{ secrets.PERSONAL_TOKEN }}
