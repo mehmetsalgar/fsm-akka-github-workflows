@@ -40,7 +40,11 @@ jobs:
           find: '/'
           replace: '-'
       - name: Run Helm Command
+        id: helmCommand
         run: |
           cd helm
           helm version          
           echo '${{ inputs.helm-command }}'
+      - name: Check Failure
+        if: steps.helmCommand.outcome != 'success'
+        run: exit 1
