@@ -69,7 +69,7 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 10m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "source-repo": "${{ inputs.repo-name }}", "version-number": "${{ env.SEMVER }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "umbrella-chart-base-branch-name": "${{ inputs.umbrella-chart-base-branch-name }}", "source-repo": "${{ inputs.repo-name }}", "version-number": "${{ env.SEMVER }}"}'
   create-infrastructure-in-k8s:
     runs-on: ubuntu-latest
     needs: create-branch-helm-umbrella
