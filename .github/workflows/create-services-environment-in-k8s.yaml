@@ -13,7 +13,6 @@ jobs:
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
     runs-on: ubuntu-latest
-    needs: create-infrastructure-in-k8s
     steps:
       - name: Create Future Environment in K8s
         uses: aurelien-baudet/workflow-dispatch@v2
