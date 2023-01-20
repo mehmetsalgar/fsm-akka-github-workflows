@@ -72,7 +72,6 @@ jobs:
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "umbrella-chart-base-branch-name": "${{ inputs.umbrella-chart-base-branch-name }}", "source-repo": "${{ inputs.repo-name }}", "version-number": "${{ env.SEMVER }}"}'
   create-infrastructure-in-k8s:
     name: Create Infrastructure in K8s with Branch Name as Namespace
-    runs-on: ubuntu-latest
     needs: create-branch-helm-umbrella
     uses: ./.github/workflows/create-infrastructure-in-k8s.yaml
     with:
@@ -82,7 +81,6 @@ jobs:
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
-    runs-on: ubuntu-latest
     needs: create-infrastructure-in-k8s
     uses: ./.github/workflows/create-services-environment-in-k8s.yaml
     with:
