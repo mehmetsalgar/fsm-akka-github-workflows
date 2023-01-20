@@ -52,6 +52,7 @@ jobs:
           arguments: |
             --version
             --no-daemon
+            -Pversion="${{ env.SEMVER }}
       - name: Helm Publish
         run: |
           echo 'gradle -Pversion="${{ env.SEMVER }}" Helm Publish'
