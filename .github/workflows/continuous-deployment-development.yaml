@@ -33,7 +33,7 @@ jobs:
           useConfigFile: true
           configFilePath: GitVersion.yml
           additionalArguments: '"/b" "${{ inputs.branch-name }}"'
-      - name: Display GitVersion ouput
+      - name: Display GitVersion output
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
   deploy:
