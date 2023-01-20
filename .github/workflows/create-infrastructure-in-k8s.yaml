@@ -12,18 +12,19 @@ on:
       value-file:
         required: true
         type: string
-create-infrastructure-in-k8s:
-  runs-on: ubuntu-latest
-  needs: create-branch-helm-umbrella
-  steps:
-    - name: Create Future Infrastructure Environment in K8s
-      uses: aurelien-baudet/workflow-dispatch@v2
-      with:
-        workflow: 'build-infrastructure-environment-with-reuse.yaml'
-        repo: 'mehmetsalgar/fsm-akka-helm-infrastructure-chart'
-        ref: "${{ inputs.base-branch-name }}"
-        token: ${{ secrets.PERSONAL_TOKEN }}
-        wait-for-completion: true
-        wait-for-completion-timeout: 5m
-        wait-for-completion-interval: 10s
-        inputs: '{"branch-name": "${{ inputs.branch-name }}", "value-file": "${{ inputs.value-file }}"}'
+jobs:
+  create-infrastructure-in-k8s:
+    runs-on: ubuntu-latest
+    needs: create-branch-helm-umbrella
+    steps:
+      - name: Create Future Infrastructure Environment in K8s
+        uses: aurelien-baudet/workflow-dispatch@v2
+        with:
+          workflow: 'build-infrastructure-environment-with-reuse.yaml'
+          repo: 'mehmetsalgar/fsm-akka-helm-infrastructure-chart'
+          ref: "${{ inputs.base-branch-name }}"
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          wait-for-completion: true
+          wait-for-completion-timeout: 5m
+          wait-for-completion-interval: 10s
+          inputs: '{"branch-name": "${{ inputs.branch-name }}", "value-file": "${{ inputs.value-file }}"}'
