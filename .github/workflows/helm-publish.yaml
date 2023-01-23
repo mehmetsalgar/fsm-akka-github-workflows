@@ -2,6 +2,10 @@ name: Helm Publish with Gradle
 run-name: ${{ github.actor }}
 on:
   workflow_call:
+    inputs:
+      umbrella-chart-base-branch-name:
+        required: true
+        type: string
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
@@ -10,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ inputs.branch-name }}
+          ref: ${{ github.ref }}
           fetch-depth: 0
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.15
@@ -31,6 +35,8 @@ jobs:
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Display GitVersion output
         run: |
           echo "SemVer: $SEMVER"
