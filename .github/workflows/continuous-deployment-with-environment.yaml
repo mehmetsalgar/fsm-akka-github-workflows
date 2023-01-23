@@ -1,5 +1,5 @@
 name: Continuous Deployment - Pull Request
-run-name: ${{ github.actor }}
+run-name: Continuous Deployment with Environment Creation triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

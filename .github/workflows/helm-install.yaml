@@ -1,5 +1,5 @@
 name: Helm Install
-run-name: ${{ github.actor }}
+run-name: Installing to Helm triggered via ${{ github.event_name }} by ${{ github.actor }} ${{ github.actor }}
 on:
   workflow_call:
     inputs:

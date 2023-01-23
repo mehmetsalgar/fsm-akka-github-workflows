@@ -1,5 +1,5 @@
 name: Create Infrastructure in Kubernetes
-run-name: ${{ github.actor }}
+run-name: Creating Infrastructure in Kubernetes triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:

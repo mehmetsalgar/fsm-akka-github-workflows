@@ -1,5 +1,5 @@
 name: Helm Publish with Gradle
-run-name: ${{ github.actor }}
+run-name: Publishing to Helm triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
 jobs:

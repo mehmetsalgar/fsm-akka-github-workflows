@@ -1,5 +1,5 @@
 name: Java / Gradle CI
-run-name: ${{ github.actor }}
+run-name: Java / Gradle CI triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
 jobs:
