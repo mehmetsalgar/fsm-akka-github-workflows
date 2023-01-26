@@ -23,7 +23,7 @@ jobs:
           useConfigFile: true
           configFilePath: GitVersion.yml
           additionalArguments: '"/b" "${{ github.ref }}"'
-  build:
+  helm-publish:
     runs-on: ubuntu-latest
     needs: calculate-version
     env:
