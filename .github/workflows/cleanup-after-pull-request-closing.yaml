@@ -16,7 +16,7 @@ jobs:
       - name: Clean Umbrella Helm Chart
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'delete-branch.yaml'
+          workflow: 'delete-branch-with-reuse.yaml'
           repo: 'mehmetsalgar/fsm-akka-helm-umbrella-chart'
           ref: 'master'
           token: ${{ secrets.PERSONAL_TOKEN }}
@@ -31,7 +31,7 @@ jobs:
       - name: Clean dev-environment
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'delete-branch.yaml'
+          workflow: 'delete-branch-with-reuse.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
           ref: 'master'
           token: ${{ secrets.PERSONAL_TOKEN }}
