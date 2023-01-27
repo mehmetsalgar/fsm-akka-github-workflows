@@ -58,7 +58,7 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "base-branch-name": "${{ inputs.base-branch-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "base-branch-name": "${{ inputs.umbrella-chart-base-branch-name }}"}'
       - name: Deploy Helm Umbrella Chart
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
