@@ -62,7 +62,7 @@ jobs:
       - name: Deploy Helm Umbrella Chart
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
-          workflow: 'build-with-parameter.yaml'
+          workflow: 'publish-and-prepare-environment.yaml'
           repo: 'mehmetsalgar/fsm-akka-helm-umbrella-chart'
           ref: '${{ inputs.branch-name }}-${{ inputs.repo-name }}'
           token: ${{ secrets.PERSONAL_TOKEN }}
