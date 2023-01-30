@@ -12,6 +12,9 @@ on:
       umbrella-chart-base-branch-name:
         required: true
         type: string
+      infrastructure-base-branch-name:
+        required: true
+        type: string
       value-file:
         required: true
         type: string
@@ -76,7 +79,7 @@ jobs:
     uses: ./.github/workflows/create-infrastructure-in-k8s.yaml
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
-      base-branch-name: 'master'
+      base-branch-name: ${{ inputs.infrastructure-base-branch-name }}
       value-file: ${{ inputs.value-file }}
     secrets: inherit
   create-services-environment-in-k8s:
