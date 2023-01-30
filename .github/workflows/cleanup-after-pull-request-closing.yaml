@@ -1,5 +1,5 @@
 name: Cleanup - Pull Request Closing
-run-name: Cleanup Environment after closed Pull Request triggered via ${{ github.event_name }} by ${{ github.actor }}
+run-name: Cleanup Environment after closed Pull Request for Branch ${{ inputs.branch-name}} triggered via ${{ github.event_name }} by ${{ github.actor }}
 on:
   workflow_call:
     inputs:
