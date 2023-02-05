@@ -29,3 +29,4 @@ jobs:
     needs: cleanup-umbrella-chart
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
+    secrets: inherit
