@@ -34,10 +34,11 @@ jobs:
         id: helmCommand
         run: |
           cd helm
-          #helm repo add fsm-akka http://fsmakka.salgar.org/repository/fsm-akka-helm/
-          #helm repo update
+          helm repo add fsm-akka http://fsmakka.salgar.org/repository/fsm-akka-helm/
+          helm repo update
           helm version          
           echo '${{ inputs.helm-command }}'
+          ${{ inputs.helm-command }}
       - name: Check Failure
         if: steps.helmCommand.outcome != 'success'
         run: exit 1

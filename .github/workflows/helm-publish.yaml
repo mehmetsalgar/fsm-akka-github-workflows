@@ -53,6 +53,7 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
+            helmPublish
             --version
             --no-daemon
             -Pversion="${{ env.SEMVER }}
