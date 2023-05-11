@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
   build:
-    if: native == false
+    if: inputs.native == false
     runs-on: ubuntu-latest
     needs: calculate-version
     env:
