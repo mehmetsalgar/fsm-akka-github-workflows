@@ -126,6 +126,6 @@ jobs:
       - name: Run Helm Command
         id: helmCommand
         run: |
-          echo $HELM_PASSWORD | helm registry login ${{ env.HELM_URL }} -u ${{ HELM_USER }} --password-stdin
+          echo ${{ env.HELM_PASSWORD }} | helm registry login ${{ env.HELM_URL }} -u ${{ env.HELM_USER }} --password-stdin
           echo "helm push /build/helm/charts/${{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://${{ env.HELM_URL }}${{ env.HELM_PATH }}"
-          helm push build/helm/charts/{{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://$HELM_URL$HELM_PATH
+          helm push build/helm/charts/{{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://${{ env.HELM_URL }}${{ env.HELM_PATH }}
