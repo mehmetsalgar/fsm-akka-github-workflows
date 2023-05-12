@@ -148,3 +148,4 @@ jobs:
           ls -al
           helm version
           echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
+          helm push build/helm/charts/${{ inputs.chart-name}}-$SEMVER.tgz oci://$HELM_URL$HELM_PATH
