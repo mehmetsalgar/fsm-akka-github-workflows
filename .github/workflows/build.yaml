@@ -145,4 +145,4 @@ jobs:
           pwd
           ls -al
           helm version
-          echo "${{ env.HELM_PASSWORD }}" | helm registry login ${{ env.HELM_URL }} -u ${{ env.HELM_USER }} --password-stdin
+          echo ${{ env.HELM_PASSWORD }} | helm registry login ${{ env.HELM_URL }} -u ${{ env.HELM_USER }} --password-stdin
