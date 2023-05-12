@@ -48,6 +48,7 @@ jobs:
       HELM_PATH: ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
+      HELM_DOWNLOAD_CLIENT: ${{ secrets.HELM_DOWNLOAD_CLIENT }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -76,6 +77,7 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
+          ORG_GRADLE_PROJECT_HELM_DOWNLOAD_CLIENT: ${{ env.HELM_DOWNLOAD_CLIENT }}
         with:
           arguments: |
             build 
@@ -95,6 +97,7 @@ jobs:
       DOCKER_UPLOAD_PASSWORD: ${{ secrets.DOCKER_UPLOAD_PASSWORD }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
+      HELM_DOWNLOAD_CLIENT: ${{ secrets.HELM_DOWNLOAD_CLIENT }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -128,6 +131,7 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
+          ORG_GRADLE_PROJECT_HELM_DOWNLOAD_CLIENT: ${{ env.HELM_DOWNLOAD_CLIENT }}
         with:
           arguments: |
             build
