@@ -41,8 +41,11 @@ jobs:
       SEMVER: ${{ needs.calculate-version.outputs.semVer }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      DOCKER_URL: ${{ secrets.DOCKER_URL }}
       DOCKER_UPLOAD_USER: ${{ secrets.DOCKER_UPLOAD_USER }}
       DOCKER_UPLOAD_PASSWORD: ${{ secrets.DOCKER_UPLOAD_PASSWORD }}
+      HELM_URL: ${{ secrets.HELM_URL }}
+      HELM_PATH: ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
     steps:
@@ -67,7 +70,10 @@ jobs:
           ORG_GRADLE_PROJECT_DOCKER_HUB_USER: ${{ env.DOCKER_HUB_USER }}
           ORG_GRADLE_PROJECT_DOCKER_HUB_PASSWORD: ${{ env.DOCKER_HUB_PASSWORD }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_USER: ${{ env.DOCKER_UPLOAD_USER }}
+          ORG_GRADLE_PROJECT_DOCKER_URL: ${{ env.DOCKER_URL }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ env.DOCKER_UPLOAD_PASSWORD }}
+          ORG_GRADLE_PROJECT_HELM_URL: { { env.HELM_URL } }
+          ORG_GRADLE_PROJECT_HELM_PATH: { { env.HELM_PATH } }
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
@@ -115,8 +121,11 @@ jobs:
           ORG_GRADLE_PROJECT_version: ${{ env.SEMVER }}
           ORG_GRADLE_PROJECT_DOCKER_HUB_USER: ${{ env.DOCKER_HUB_USER }}
           ORG_GRADLE_PROJECT_DOCKER_HUB_PASSWORD: ${{ env.DOCKER_HUB_PASSWORD }}
+          ORG_GRADLE_PROJECT_DOCKER_URL: ${{ env.DOCKER_URL }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_USER: ${{ env.DOCKER_UPLOAD_USER }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ env.DOCKER_UPLOAD_PASSWORD }}
+          ORG_GRADLE_PROJECT_HELM_URL: {{ env.HELM_URL }}
+          ORG_GRADLE_PROJECT_HELM_PATH: {{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
@@ -124,7 +133,7 @@ jobs:
             build
             --no-daemon
       - name: Run Helm Command
-        id: helmCommand
+        id: helmLoginAndPush
         run: |
           echo ${{ env.HELM_PASSWORD }} | helm registry login ${{ env.HELM_URL }} -u ${{ env.HELM_USER }} --password-stdin
           echo "helm push /build/helm/charts/${{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://${{ env.HELM_URL }}${{ env.HELM_PATH }}"
