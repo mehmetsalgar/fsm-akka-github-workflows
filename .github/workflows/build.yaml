@@ -7,6 +7,10 @@ on:
         default: false
         required: false
         type: boolean
+      chart-name:
+        default: "something"
+        required: false
+        type: string
 jobs:
   calculate-version:
     runs-on: ubuntu-latest
@@ -99,6 +103,10 @@ jobs:
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.PERSONAL_TOKEN }}
+      - id: install
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.11.2'
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Build with Gradle
@@ -113,7 +121,11 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
-            build 
-            -PHELM_DOWNLOAD_CLIENT=true 
-            -PHELM_PROCESS=false
+            build
             --no-daemon
+      - name: Run Helm Command
+        id: helmCommand
+        run: |
+          echo $HELM_PASSWORD | helm registry login ${{ env.HELM_URL }} -u ${{ HELM_USER }} --password-stdin
+          echo "helm push /build/helm/charts/${{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://${{ env.HELM_URL }}${{ env.HELM_PATH }}"
+          helm push build/helm/charts/{{ inputs.chart-name}}-${{ env.SEMVER }}.tgz oci://$HELM_URL$HELM_PATH
