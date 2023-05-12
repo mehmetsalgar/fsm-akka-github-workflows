@@ -93,8 +93,11 @@ jobs:
       SEMVER: ${{ needs.calculate-version.outputs.semVer }}
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      DOCKER_URL: ${{ secrets.DOCKER_URL }}
       DOCKER_UPLOAD_USER: ${{ secrets.DOCKER_UPLOAD_USER }}
       DOCKER_UPLOAD_PASSWORD: ${{ secrets.DOCKER_UPLOAD_PASSWORD }}
+      HELM_URL: ${{ secrets.HELM_URL }}
+      HELM_PATH: ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
       HELM_DOWNLOAD_CLIENT: ${{ secrets.HELM_DOWNLOAD_CLIENT }}
