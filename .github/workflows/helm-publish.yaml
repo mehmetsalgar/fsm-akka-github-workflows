@@ -55,12 +55,13 @@ jobs:
         uses: gradle/gradle-build-action@v2
         env:
           ORG_GRADLE_PROJECT_version: ${{ env.SEMVER }}
+          ORG_GRADLE_PROJECT_HELM_URL: ${{ env.HELM_URL }}
+          ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
             helmPackage
-            --version
             --no-daemon
             -Pversion="${{ env.SEMVER }}
       - name: Helm Publish
