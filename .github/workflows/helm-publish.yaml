@@ -63,7 +63,7 @@ jobs:
           arguments: |
             helmPackage
             --no-daemon
-            -Pversion="${{ env.SEMVER }}
+            -Pversion=${{ env.SEMVER }}
       - name: Helm Publish
         id: helmPublish
         shell: bash
