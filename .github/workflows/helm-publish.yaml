@@ -28,6 +28,8 @@ jobs:
     needs: calculate-version
     env:
       SEMVER: ${{ needs.calculate-version.outputs.semVer }}
+      HELM_URL: ${{ secrets.HELM_URL }}
+      HELM_PATH:  ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
       HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
     steps:
@@ -53,10 +55,16 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_PASSWORD: ${{ env.HELM_PASSWORD }}
         with:
           arguments: |
-            helmPublish
+            build
             --version
             --no-daemon
             -Pversion="${{ env.SEMVER }}
       - name: Helm Publish
+        id: helmPublish
+        shell: bash
         run: |
-          echo 'gradle -Pversion="${{ env.SEMVER }}" Helm Publish'
+          echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
+          helm push build/helm/charts/fsm-akka-helm-umbrella-chart-$SEMVER.tgz oci://$HELM_URL$HELM_PATH
+      - name: Check Failure
+        if: steps.helmLoginAndPush.outcome != 'success'
+        run: exit 1

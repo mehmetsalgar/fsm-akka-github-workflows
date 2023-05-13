@@ -143,9 +143,8 @@ jobs:
         id: helmLoginAndPush
         shell: bash
         run: |
-          export
-          pwd
-          ls -al
-          helm version
           echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
           helm push build/helm/charts/${{ inputs.chart-name}}-$SEMVER.tgz oci://$HELM_URL$HELM_PATH
+      - name: Check Failure
+        if: steps.helmLoginAndPush.outcome != 'success'
+        run: exit 1
