@@ -57,7 +57,7 @@ jobs:
         with:
           workflow: 'prepare-environment.yaml'
           repo: 'mehmetsalgar/fsm-akka-dev-environment'
-          ref: 'bitnami'
+          ref: 'development'
           token: ${{ secrets.PERSONAL_TOKEN }}
           wait-for-completion: true
           wait-for-completion-timeout: 5m
