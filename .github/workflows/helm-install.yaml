@@ -9,9 +9,6 @@ on:
 jobs:
   build-environment-for-future-branch:
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
     steps:
       - id: auth
         uses: google-github-actions/auth@v1
@@ -33,7 +30,10 @@ jobs:
         shell: bash
         env:
           HELM_COMMAND: ${{ inputs.helm-command }}
+          SERVICE_ACCOUNT: ${{ secrets.GCP_CREDENTIALS }}
         run: |
+          echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
+          gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
           gcloud container clusters get-credentials fsmakka-gke-dev --zone europe-west3-c --project fsmakka
           cd helm
           $HELM_COMMAND
