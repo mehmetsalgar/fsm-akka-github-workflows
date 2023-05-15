@@ -26,14 +26,13 @@ jobs:
           fetch-depth: 0
       - name: Run Helm Command
         id: helmCommand
+        shell: bash
+        env:
+          HELM_COMMAND: ${{ inputs.helm-command }}
         run: |
           gcloud container clusters get-credentials fsmakka-gke-dev --zone europe-west3-c --project fsmakka
           cd helm
-          helm repo add fsm-akka http://fsmakka.salgar.org/repository/fsm-akka-helm/
-          helm repo update
-          helm version          
-          echo '${{ inputs.helm-command }}'
-          ${{ inputs.helm-command }}
+          $HELM_COMMAND
       - name: Check Failure
         if: steps.helmCommand.outcome != 'success'
         run: exit 1
