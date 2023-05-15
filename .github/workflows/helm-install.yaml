@@ -10,6 +10,9 @@ jobs:
   build-environment-for-future-branch:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - id: auth
         uses: google-github-actions/auth@v1
         with:
@@ -22,9 +25,6 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: '3.11.2'
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Run Helm Command
         id: helmCommand
         shell: bash
