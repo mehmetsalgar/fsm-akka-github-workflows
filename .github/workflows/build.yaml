@@ -62,6 +62,10 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
           cache: gradle
+      - id: installHelm
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.11.2'
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Build with Gradle
@@ -80,10 +84,17 @@ jobs:
           ORG_GRADLE_PROJECT_HELM_DOWNLOAD_CLIENT: ${{ env.HELM_DOWNLOAD_CLIENT }}
         with:
           arguments: |
-            build 
-            -PHELM_DOWNLOAD_CLIENT=true 
-            -PHELM_PROCESS=false
+            build
             --no-daemon
+      - name: Run Helm Command
+        id: helmLoginAndPush
+        shell: bash
+        run: |
+          echo "$HELM_PASSWORD" | helm registry login $HELM_URL -u $HELM_USER --password-stdin
+          helm push build/helm/charts/${{ inputs.chart-name}}-$SEMVER.tgz oci://$HELM_URL$HELM_PATH
+      - name: Check Failure
+        if: steps.helmLoginAndPush.outcome != 'success'
+        run: exit 1
 
   build-native:
     if: inputs.native == true
@@ -115,7 +126,7 @@ jobs:
           java-version: '17'
           components: 'native-image'
           github-token: ${{ secrets.PERSONAL_TOKEN }}
-      - id: install
+      - id: installHelm
         uses: azure/setup-helm@v3
         with:
           version: '3.11.2'
