@@ -38,6 +38,7 @@ jobs:
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           gcloud container clusters get-credentials fsmakka-gke-dev --zone europe-west3-c --project fsmakka
           cd helm
+          echo $HELM_COMMAND
           $HELM_COMMAND
       - name: Check Failure
         if: steps.helmCommand.outcome != 'success'
