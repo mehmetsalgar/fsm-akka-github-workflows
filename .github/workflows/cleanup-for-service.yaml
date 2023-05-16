@@ -12,12 +12,12 @@ on:
 jobs:
   cleanup-environment:
     uses: ./.github/workflows/cleanup-environment.yaml
-    needs: cleanup-umbrella-chart
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
     secrets: inherit
   cleanup-umbrella-chart:
     runs-on: ubuntu-latest
+    needs: cleanup-environment
     steps:
       - name: Clean Umbrella Helm Chart
         uses: aurelien-baudet/workflow-dispatch@v2
