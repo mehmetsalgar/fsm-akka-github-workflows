@@ -7,7 +7,7 @@ on:
         required: true
         type: string
 jobs:
-  build-environment-for-future-branch:
+  execute-helm-command:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
