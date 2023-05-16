@@ -10,6 +10,12 @@ on:
         required: true
         type: string
 jobs:
+  cleanup-environment:
+    uses: ./.github/workflows/cleanup-environment.yaml
+    needs: cleanup-umbrella-chart
+    with:
+      branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
+    secrets: inherit
   cleanup-umbrella-chart:
     runs-on: ubuntu-latest
     steps:
@@ -24,9 +30,3 @@ jobs:
           wait-for-completion-timeout: 10m
           wait-for-completion-interval: 10s
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}"}'
-  cleanup-environment:
-    uses: ./.github/workflows/cleanup-environment.yaml
-    needs: cleanup-umbrella-chart
-    with:
-      branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
-    secrets: inherit
