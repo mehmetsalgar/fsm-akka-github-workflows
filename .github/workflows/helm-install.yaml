@@ -6,7 +6,7 @@ on:
       helm-command:
         required: true
         type: string
-      cluster-name:
+      cluster-name-not-normalised:
         required: true
         type: string
 jobs:
@@ -39,7 +39,7 @@ jobs:
           gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
           gcloud components install gke-gcloud-auth-plugin
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-          gcloud container clusters get-credentials ${{ inputs.cluster-name}} --zone europe-west3-c --project fsmakka
+          gcloud container clusters get-credentials ${{ inputs.cluster-name-not-normalised }} --zone europe-west3-c --project fsmakka
           cd helm
           echo $HELM_COMMAND
           $HELM_COMMAND

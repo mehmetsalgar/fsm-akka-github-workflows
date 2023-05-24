@@ -12,6 +12,9 @@ on:
       cluster-name:
         type: string
         required: true
+      cluster-name-not-normalised:
+        type: string
+        required: true
 jobs:
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
@@ -27,4 +30,4 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}", "cluster-name": "${{ inputs.cluster-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}", "cluster-name": "${{ inputs.cluster-name }}", "cluster-name-not-normalised": "${{ inputs.cluster-name-not-normalised }}"}'

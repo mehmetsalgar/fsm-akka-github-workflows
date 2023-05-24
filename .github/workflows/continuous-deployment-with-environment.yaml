@@ -24,6 +24,7 @@ jobs:
     outputs:
       semVer: ${{ steps.gitversion.outputs.semVer }}
       cluster-name: ${{ steps.checkDayOver.outputs.cluster_name }}
+      cluster-name-not-normalised: ${{ steps.checkDayOver.outputs.cluster_name_not_normalised }}
     steps:
       - name: Display Branch
         run: |
@@ -51,8 +52,10 @@ jobs:
         run: |
           if test -f "day_over.txt"; then
             echo "cluster_name=fsmakkaGKEDayOver" >> "$GITHUB_OUTPUT"
+            echo "cluster_name_not_normalised=fsmakka-gke-dev-day-over" >> "$GITHUB_OUTPUT"
           else
             echo "cluster_name=fsmakkaGKE" >> "$GITHUB_OUTPUT"
+            echo "cluster_name_not_normalised=fsmakka-gke-dev" >> "$GITHUB_OUTPUT"
           fi
   create-branch-helm-umbrella:
     runs-on: ubuntu-latest
@@ -90,7 +93,7 @@ jobs:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
       base-branch-name: ${{ inputs.infrastructure-base-branch-name }}
       value-file: ${{ inputs.value-file }}
-      cluster-name: ${{ needs.calculate-version.outputs.cluster-name }}
+      cluster-name-not-normalised: ${{ needs.calculate-version.outputs.cluster-name-not-normalised }}
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
@@ -100,4 +103,5 @@ jobs:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
       base-branch-name: 'master'
       cluster-name: ${{ needs.calculate-version.outputs.cluster-name }}
+      cluster-name-not-normalised: ${{ needs.calculate-version.outputs.cluster-name-not-normalised }}
     secrets: inherit

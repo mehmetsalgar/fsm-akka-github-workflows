@@ -12,7 +12,7 @@ on:
       value-file:
         required: true
         type: string
-      cluster-name:
+      cluster-name-not-normalised:
         type: string
         required: true
 jobs:
@@ -29,4 +29,4 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}", "value-file": "${{ inputs.value-file }}", "cluster-name": "${{ inputs.cluster-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}", "value-file": "${{ inputs.value-file }}", "cluster-name-not-normalised": "${{ inputs.cluster-name-not-normalised }}"}'
