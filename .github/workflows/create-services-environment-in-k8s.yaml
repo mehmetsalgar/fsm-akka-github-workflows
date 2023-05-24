@@ -16,6 +16,9 @@ jobs:
     outputs:
       is-day-over: ${{ steps.checkDayOver.outputs.is_day_over }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - id: checkDayOver
         shell: bash
         run: |
