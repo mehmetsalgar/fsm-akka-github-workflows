@@ -16,14 +16,14 @@ jobs:
     outputs:
       is-day-over: ${{ steps.checkDayOver.outputs.is_day_over }}
     steps:
-      id: checkDayOver
-      shell: bash
-      run: |
-        if test -f "day_over.txt"; then
-          echo "is_day_over=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "is_day_over=false" >> "$GITHUB_OUTPUT"
-        fi
+      - id: checkDayOver
+        shell: bash
+        run: |
+          if test -f "day_over.txt"; then
+            echo "is_day_over=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_day_over=false" >> "$GITHUB_OUTPUT"
+          fi
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
     runs-on: ubuntu-latest
