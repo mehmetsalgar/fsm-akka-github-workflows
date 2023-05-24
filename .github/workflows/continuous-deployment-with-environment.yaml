@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       semVer: ${{ steps.gitversion.outputs.semVer }}
+      cluster-name: ${{ steps.checkDayOver.outputs.cluster_name }}
     steps:
       - name: Display Branch
         run: |
@@ -45,6 +46,14 @@ jobs:
       - name: Display GitVersion output
         run: |
           echo "SemVer: $GITVERSION_SEMVER"
+      - id: checkDayOver
+        shell: bash
+        run: |
+          if test -f "day_over.txt"; then
+            echo "cluster_name=fsmakkaGKEDayOver" >> "$GITHUB_OUTPUT"
+          else
+            echo "cluster_name=fsmakkaGKE" >> "$GITHUB_OUTPUT"
+          fi
   create-branch-helm-umbrella:
     runs-on: ubuntu-latest
     needs: calculate-version
@@ -75,18 +84,20 @@ jobs:
           inputs: '{"branch-name": "${{ inputs.branch-name }}-${{ inputs.repo-name }}", "umbrella-chart-base-branch-name": "${{ inputs.umbrella-chart-base-branch-name }}", "source-repo": "${{ inputs.repo-name }}", "version-number": "${{ env.SEMVER }}"}'
   create-infrastructure-in-k8s:
     name: Create Infrastructure in K8s with Branch Name as Namespace
-    needs: create-branch-helm-umbrella
+    needs: [calculate-version, create-branch-helm-umbrella]
     uses: ./.github/workflows/create-infrastructure-in-k8s.yaml
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
       base-branch-name: ${{ inputs.infrastructure-base-branch-name }}
       value-file: ${{ inputs.value-file }}
+      cluster-name: ${{ needs.calculate-version.outputs.cluster-name }}
     secrets: inherit
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
-    needs: create-infrastructure-in-k8s
+    needs: [calculate-version, create-infrastructure-in-k8s]
     uses: ./.github/workflows/create-services-environment-in-k8s.yaml
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
       base-branch-name: 'master'
+      cluster-name: ${{ needs.calculate-version.outputs.cluster-name }}
     secrets: inherit
