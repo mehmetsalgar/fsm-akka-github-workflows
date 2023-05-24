@@ -10,9 +10,24 @@ on:
         required: true
         type: string
 jobs:
+  is-day-over:
+    name: Calculating target k8s Cluster
+    runs-on: ubuntu-latest
+    outputs:
+      is-day-over: ${{ steps.checkDayOver.outputs.is_day_over }}
+    steps:
+      id: checkDayOver
+      shell: bash
+      run: |
+        if test -f "day_over.txt"; then
+          echo "is_day_over=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "is_day_over=false" >> "$GITHUB_OUTPUT"
+        fi
   create-services-environment-in-k8s:
     name: Create Services Environment in K8s with Branch Name as Namespace
     runs-on: ubuntu-latest
+    needs: is-day-over
     steps:
       - name: Create Future Environment in K8s
         uses: aurelien-baudet/workflow-dispatch@v2
@@ -24,4 +39,4 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}", "day-over": "${{ needs.is-day-over.outputs.is-day-over }}"}'
