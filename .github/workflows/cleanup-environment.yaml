@@ -24,7 +24,7 @@ jobs:
           wait-for-completion: true
           wait-for-completion-timeout: 5m
           wait-for-completion-interval: 10s
-          inputs: '{"branch-name": "${{ inputs.branch-name }}", "cluster-name", "${{ inputs.cluster-name }}"}'
+          inputs: '{"branch-name": "${{ inputs.branch-name }}"}'
       - name: Clean Infrastructure Environment in K8s
         uses: aurelien-baudet/workflow-dispatch@v2
         with:
