@@ -13,7 +13,7 @@ jobs:
   determine-cluster-name:
     runs-on: ubuntu-latest
     outputs:
-      cluster-name: ${{ steps.calculateClusterName.outputs.cluster_name }}
+      cluster-name-not-normalised: ${{ steps.calculateClusterName.outputs.cluster_name_not_normalised }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -22,16 +22,16 @@ jobs:
         shell: bash
         run: |
           if test -f "day_over.txt"; then
-            echo "cluster_name=fsmakkaGKEDayOver" >> "$GITHUB_OUTPUT"
+            echo "cluster_name_not_normalised=fsmakka-gke-dev-day-over" >> "$GITHUB_OUTPUT"
           else
-            echo "cluster_name=fsmakkaGKE" >> "$GITHUB_OUTPUT"
+            echo "cluster_name_not_normalised=fsmakka-gke-dev" >> "$GITHUB_OUTPUT"
           fi
   cleanup-environment:
     needs: determine-cluster-name
     uses: ./.github/workflows/cleanup-environment.yaml
     with:
       branch-name: ${{ inputs.branch-name }}-${{ inputs.repo-name }}
-      cluster-name: ${{ needs.determine-cluster-name.outputs.cluster-name }}
+      cluster-name-not-normalised: ${{ needs.determine-cluster-name.outputs.cluster-name-not-normalised }}
     secrets: inherit
   cleanup-umbrella-chart:
     runs-on: ubuntu-latest
