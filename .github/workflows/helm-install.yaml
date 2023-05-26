@@ -35,8 +35,8 @@ jobs:
           HELM_COMMAND: ${{ inputs.helm-command }}
           SERVICE_ACCOUNT: ${{ secrets.GCP_CREDENTIALS }}
         run: |
-          echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
-          gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+          echo $SERVICE_ACCOUNT > /tmp/${{ github.run_id }}.json
+          gcloud auth activate-service-account --key-file /tmp/${{ github.run_id }}.json
           gcloud components install gke-gcloud-auth-plugin
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           gcloud container clusters get-credentials ${{ inputs.cluster-name-not-normalised }} --zone europe-west3-c --project fsmakka
