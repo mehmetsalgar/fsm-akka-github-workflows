@@ -53,6 +53,16 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.HELM_PASSWORD }}'
+          token_format: 'access_token'
+      - id: 'gcp_secrets'
+        uses: 'google-github-actions/get-secretmanager-secrets@v1'
+        with:
+          secrets: |-
+            dockerUploadPassword:fsmakka/DOCKER_UPLOAD_PASSWORD
       - name: Display GitVersion output
         run: |
           echo "SemVer: $SEMVER"
@@ -106,7 +116,7 @@ jobs:
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       DOCKER_URL: ${{ secrets.DOCKER_URL }}
       DOCKER_UPLOAD_USER: ${{ secrets.DOCKER_UPLOAD_USER }}
-      DOCKER_UPLOAD_PASSWORD: ${{ secrets.DOCKER_UPLOAD_PASSWORD }}
+      DOCKER_UPLOAD_PASSWORD: ${{ steps.gcp_secrets.outputs.dockerUploadPassword }}
       HELM_URL: ${{ secrets.HELM_URL }}
       HELM_PATH: ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
@@ -116,6 +126,16 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.HELM_PASSWORD }}'
+          token_format: 'access_token'
+      - id: 'gcp_secrets'
+        uses: 'google-github-actions/get-secretmanager-secrets@v1'
+        with:
+          secrets: |-
+           dockerUploadPassword:fsmakka/DOCKER_UPLOAD_PASSWORD
       - name: Display GitVersion output
         run: |
           echo "SemVer: $SEMVER"
@@ -133,6 +153,7 @@ jobs:
       - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: Build with Gradle
+        needs:
         uses: gradle/gradle-build-action@v2
         env:
           ORG_GRADLE_PROJECT_version: ${{ env.SEMVER }}
@@ -140,7 +161,7 @@ jobs:
           ORG_GRADLE_PROJECT_DOCKER_HUB_PASSWORD: ${{ env.DOCKER_HUB_PASSWORD }}
           ORG_GRADLE_PROJECT_DOCKER_URL: ${{ env.DOCKER_URL }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_USER: ${{ env.DOCKER_UPLOAD_USER }}
-          ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ env.DOCKER_UPLOAD_PASSWORD }}
+          ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ steps.gcp_secrets.outputs.dockerUploadPassword }}
           ORG_GRADLE_PROJECT_HELM_URL: ${{ env.HELM_URL }}
           ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
