@@ -86,7 +86,7 @@ jobs:
           ORG_GRADLE_PROJECT_DOCKER_HUB_PASSWORD: ${{ env.DOCKER_HUB_PASSWORD }}
           ORG_GRADLE_PROJECT_DOCKER_UPLOAD_USER: ${{ env.DOCKER_UPLOAD_USER }}
           ORG_GRADLE_PROJECT_DOCKER_URL: ${{ env.DOCKER_URL }}
-          ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ env.DOCKER_UPLOAD_PASSWORD }}
+          ORG_GRADLE_PROJECT_DOCKER_UPLOAD_PASSWORD: ${{ steps.gcp_secrets.outputs.dockerUploadPassword }}
           ORG_GRADLE_PROJECT_HELM_URL: ${{ env.HELM_URL }}
           ORG_GRADLE_PROJECT_HELM_PATH: ${{ env.HELM_PATH }}
           ORG_GRADLE_PROJECT_HELM_USER: ${{ env.HELM_USER }}
@@ -116,7 +116,7 @@ jobs:
       DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       DOCKER_URL: ${{ secrets.DOCKER_URL }}
       DOCKER_UPLOAD_USER: ${{ secrets.DOCKER_UPLOAD_USER }}
-      DOCKER_UPLOAD_PASSWORD: ${{ steps.gcp_secrets.outputs.dockerUploadPassword }}
+      DOCKER_UPLOAD_PASSWORD:  ${{ secrets.DOCKER_UPLOAD_PASSWORD }}
       HELM_URL: ${{ secrets.HELM_URL }}
       HELM_PATH: ${{ secrets.HELM_PATH }}
       HELM_USER: ${{ secrets.HELM_USER }}
